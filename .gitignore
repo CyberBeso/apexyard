@@ -77,3 +77,8 @@ workspace/*
 # `git status` shows them as untracked symlinks — leave them alone.
 # If you absolutely want to suppress the untracked-symlink line, add the
 # specific name to .git/info/exclude on each clone.
+
+# Split-portfolio v2: registry, per-project docs and onboarding live in the
+# private sibling repo (../apexyard-portfolio).
+/apexyard.projects.yaml
+/projects
