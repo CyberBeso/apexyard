@@ -80,5 +80,5 @@ workspace/*
 # `git status` shows them as untracked symlinks — leave them alone.
 # If you absolutely want to suppress the untracked-symlink line, add the
 # specific name to .git/info/exclude on each clone.
-apexyard.projects.yaml
-projects
+/apexyard.projects.yaml
+/projects
