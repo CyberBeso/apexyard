@@ -58,7 +58,7 @@ root. No runtime or service is required.
 
 - **20 roles** across 6 departments (engineering, product, design, security, data, architecture) that activate on triggers
 - **60 shell hooks** that mechanically enforce the SDLC — ticket-first edits, a two-marker merge gate, migration gates, secrets scanning, and more
-- **66 slash-command skills** — from `/setup` and `/handover` to `/decide`, `/code-review`, `/migration`, and `/launch-check`
+- **69 slash-command skills** — from `/setup`, `/handover`, and `/scaffold` to `/decide`, `/code-review`, `/migration`, and `/launch-check`
 - **23 sub-agents** — Rex (code review), Hakim (security), Tariq (design review), plus the department personas
 - **22 rule files**, workflow docs, and document templates (PRD, tech design, ADR, AgDR, C4 diagrams)
 
@@ -170,6 +170,19 @@ Full setup guide with directory layout, daily workflow, and FAQ: [`docs/multi-pr
 
 Keeping a fork current — upgrade in place, when to re-fork instead, and how to preserve your portfolio data either way: [`docs/upgrading.md`](docs/upgrading.md).
 
+### Optional: status band above the prompt
+
+The `apexyard-status` plugin draws one line above the Claude Code prompt. The line shows the active ticket, the PRs that wait for your `/approve-merge`, and the reviewer lock of the session. The plugin only reads data. It checks the open PRs with one cached, read-only `gh pr list` call for each repo. It does not replace a hook or a gate.
+
+`/setup` asks if you want the band. If you skipped that question, run these two commands from the ops-fork root:
+
+```bash
+claude plugin marketplace add ./ --scope local
+claude plugin install apexyard-status@apexyard --scope local
+```
+
+The band is on only for you, on this machine. After `/update`, run `/reload-plugins` to load the new version. Details and settings: [`plugins/apexyard-status/README.md`](plugins/apexyard-status/README.md).
+
 ## Using another AI coding tool?
 
 **ApexYard was built for Claude Code.** Its slash commands are native Claude
@@ -246,6 +259,12 @@ Thanks to everyone who contributes code, documentation, bug reports, ideas, and 
 <a href="https://github.com/hossam-96" title="hossam-96"><img src="https://github.com/hossam-96.png?size=100" width="64" height="64" alt="hossam-96"></a>
 <a href="https://github.com/aniketshukla1" title="aniketshukla1"><img src="https://github.com/aniketshukla1.png?size=100" width="64" height="64" alt="aniketshukla1"></a>
 <a href="https://github.com/ahmedashraffcih" title="ahmedashraffcih"><img src="https://github.com/ahmedashraffcih.png?size=100" width="64" height="64" alt="ahmedashraffcih"></a>
+<a href="https://github.com/ahmedk20" title="ahmedk20"><img src="https://github.com/ahmedk20.png?size=100" width="64" height="64" alt="ahmedk20"></a>
+<a href="https://github.com/moussaws" title="moussaws"><img src="https://github.com/moussaws.png?size=100" width="64" height="64" alt="moussaws"></a>
+<a href="https://github.com/a-abdellatif98" title="a-abdellatif98"><img src="https://github.com/a-abdellatif98.png?size=100" width="64" height="64" alt="a-abdellatif98"></a>
+<a href="https://github.com/AhmedTheGeek" title="AhmedTheGeek"><img src="https://github.com/AhmedTheGeek.png?size=100" width="64" height="64" alt="AhmedTheGeek"></a>
+<a href="https://github.com/MohammedEl-sayedAhmed" title="MohammedEl-sayedAhmed"><img src="https://github.com/MohammedEl-sayedAhmed.png?size=100" width="64" height="64" alt="MohammedEl-sayedAhmed"></a>
+<a href="https://github.com/NagyWesley" title="NagyWesley"><img src="https://github.com/NagyWesley.png?size=100" width="64" height="64" alt="NagyWesley"></a>
 </p>
 
 ### Issue contributors
@@ -255,6 +274,7 @@ Thank you to everyone who opened issues, including bug reports, feature requests
 <p>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aa-abdellatif98" title="a-abdellatif98"><img src="https://github.com/a-abdellatif98.png?size=100" width="64" height="64" alt="a-abdellatif98"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aa-elnemr" title="a-elnemr"><img src="https://github.com/a-elnemr.png?size=100" width="64" height="64" alt="a-elnemr"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aabbaseya" title="abbaseya"><img src="https://github.com/abbaseya.png?size=100" width="64" height="64" alt="abbaseya"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AAbdelrahman-Shahda" title="Abdelrahman-Shahda"><img src="https://github.com/Abdelrahman-Shahda.png?size=100" width="64" height="64" alt="Abdelrahman-Shahda"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AAbdElrahmaN31" title="AbdElrahmaN31"><img src="https://github.com/AbdElrahmaN31.png?size=100" width="64" height="64" alt="AbdElrahmaN31"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aaelnemr" title="aelnemr"><img src="https://github.com/aelnemr.png?size=100" width="64" height="64" alt="aelnemr"></a>
@@ -271,27 +291,31 @@ Thank you to everyone who opened issues, including bug reports, feature requests
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aborzoj" title="borzoj"><img src="https://github.com/borzoj.png?size=100" width="64" height="64" alt="borzoj"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3ADr-kersho" title="Dr-kersho"><img src="https://github.com/Dr-kersho.png?size=100" width="64" height="64" alt="Dr-kersho"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Adrmas" title="drmas"><img src="https://github.com/drmas.png?size=100" width="64" height="64" alt="drmas"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aeibrahim95" title="eibrahim95"><img src="https://github.com/eibrahim95.png?size=100" width="64" height="64" alt="eibrahim95"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aengnaruto" title="engnaruto"><img src="https://github.com/engnaruto.png?size=100" width="64" height="64" alt="engnaruto"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Ahamoda-dev" title="hamoda-dev"><img src="https://github.com/hamoda-dev.png?size=100" width="64" height="64" alt="hamoda-dev"></a>
-<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Ahossam-96" title="hossam-96"><img src="https://github.com/hossam-96.png?size=100" width="64" height="64" alt="hossam-96"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Ahazemahmedx0" title="hazemahmedx0"><img src="https://github.com/hazemahmedx0.png?size=100" width="64" height="64" alt="hazemahmedx0"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AHC12026" title="HC12026"><img src="https://github.com/HC12026.png?size=100" width="64" height="64" alt="HC12026"></a>
-<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AHOSS11H" title="HOSS11H"><img src="https://github.com/HOSS11H.png?size=100" width="64" height="64" alt="HOSS11H"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AHishamM1" title="HishamM1"><img src="https://github.com/HishamM1.png?size=100" width="64" height="64" alt="HishamM1"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AHOSS11H" title="HOSS11H"><img src="https://github.com/HOSS11H.png?size=100" width="64" height="64" alt="HOSS11H"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Ahossam-96" title="hossam-96"><img src="https://github.com/hossam-96.png?size=100" width="64" height="64" alt="hossam-96"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Aibrahim-gad" title="ibrahim-gad"><img src="https://github.com/ibrahim-gad.png?size=100" width="64" height="64" alt="ibrahim-gad"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Ajafarguzman666-ops" title="jafarguzman666-ops"><img src="https://github.com/jafarguzman666-ops.png?size=100" width="64" height="64" alt="jafarguzman666-ops"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AKarimEbrahemAbdelaziz" title="KarimEbrahemAbdelaziz"><img src="https://github.com/KarimEbrahemAbdelaziz.png?size=100" width="64" height="64" alt="KarimEbrahemAbdelaziz"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Akhaledmedra" title="khaledmedra"><img src="https://github.com/khaledmedra.png?size=100" width="64" height="64" alt="khaledmedra"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Amabdelaziz77" title="mabdelaziz77"><img src="https://github.com/mabdelaziz77.png?size=100" width="64" height="64" alt="mabdelaziz77"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Amahmoudsobhy74" title="mahmoudsobhy74"><img src="https://github.com/mahmoudsobhy74.png?size=100" width="64" height="64" alt="mahmoudsobhy74"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AManito2z" title="Manito2z"><img src="https://github.com/Manito2z.png?size=100" width="64" height="64" alt="Manito2z"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AMedNewton" title="MedNewton"><img src="https://github.com/MedNewton.png?size=100" width="64" height="64" alt="MedNewton"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AMeDoTarek73" title="MeDoTarek73"><img src="https://github.com/MeDoTarek73.png?size=100" width="64" height="64" alt="MeDoTarek73"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AMina4lfy" title="Mina4lfy"><img src="https://github.com/Mina4lfy.png?size=100" width="64" height="64" alt="Mina4lfy"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AmohamedELamine" title="mohamedELamine"><img src="https://github.com/mohamedELamine.png?size=100" width="64" height="64" alt="mohamedELamine"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AMohammedEl-sayedAhmed" title="MohammedEl-sayedAhmed"><img src="https://github.com/MohammedEl-sayedAhmed.png?size=100" width="64" height="64" alt="MohammedEl-sayedAhmed"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Amosta7il" title="mosta7il"><img src="https://github.com/mosta7il.png?size=100" width="64" height="64" alt="mosta7il"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Amostiwheelietravel" title="mostiwheelietravel"><img src="https://github.com/mostiwheelietravel.png?size=100" width="64" height="64" alt="mostiwheelietravel"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Amoussaws" title="moussaws"><img src="https://github.com/moussaws.png?size=100" width="64" height="64" alt="moussaws"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Amuhammadattia95" title="muhammadattia95"><img src="https://github.com/muhammadattia95.png?size=100" width="64" height="64" alt="muhammadattia95"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3ANagyWesley" title="NagyWesley"><img src="https://github.com/NagyWesley.png?size=100" width="64" height="64" alt="NagyWesley"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Anickyreinert" title="nickyreinert"><img src="https://github.com/nickyreinert.png?size=100" width="64" height="64" alt="nickyreinert"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AnLoops" title="nLoops"><img src="https://github.com/nLoops.png?size=100" width="64" height="64" alt="nLoops"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AOmar-Elhorbity" title="Omar-Elhorbity"><img src="https://github.com/Omar-Elhorbity.png?size=100" width="64" height="64" alt="Omar-Elhorbity"></a>
@@ -302,12 +326,16 @@ Thank you to everyone who opened issues, including bug reports, feature requests
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Apsmend" title="psmend"><img src="https://github.com/psmend.png?size=100" width="64" height="64" alt="psmend"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Arafik-wahid-cubeish" title="rafik-wahid-cubeish"><img src="https://github.com/rafik-wahid-cubeish.png?size=100" width="64" height="64" alt="rafik-wahid-cubeish"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3ARef34t" title="Ref34t"><img src="https://github.com/Ref34t.png?size=100" width="64" height="64" alt="Ref34t"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Asamahali" title="samahali"><img src="https://github.com/samahali.png?size=100" width="64" height="64" alt="samahali"></a>
+<a href="https://github.com/SecFathy" title="SecFathy"><img src="https://github.com/SecFathy.png?size=100" width="64" height="64" alt="SecFathy"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Asts1078" title="sts1078"><img src="https://github.com/sts1078.png?size=100" width="64" height="64" alt="sts1078"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Asudanese" title="sudanese"><img src="https://github.com/sudanese.png?size=100" width="64" height="64" alt="sudanese"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Atifa64" title="tifa64"><img src="https://github.com/tifa64.png?size=100" width="64" height="64" alt="tifa64"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Avjcv26" title="vjcv26"><img src="https://github.com/vjcv26.png?size=100" width="64" height="64" alt="vjcv26"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Ayehiagamalx" title="yehiagamalx"><img src="https://github.com/yehiagamalx.png?size=100" width="64" height="64" alt="yehiagamalx"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AYOoOUNiieeSS" title="YOoOUNiieeSS"><img src="https://github.com/YOoOUNiieeSS.png?size=100" width="64" height="64" alt="YOoOUNiieeSS"></a>
 <a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3Azeyadsleem" title="zeyadsleem"><img src="https://github.com/zeyadsleem.png?size=100" width="64" height="64" alt="zeyadsleem"></a>
+<a href="https://github.com/me2resh/apexyard/issues?q=is%3Aissue%20author%3AZiadHosny" title="ZiadHosny"><img src="https://github.com/ZiadHosny.png?size=100" width="64" height="64" alt="ZiadHosny"></a>
 </p>
 
 When updating these credits, include new issue authors as well as pull-request contributors.
