@@ -99,6 +99,16 @@ jobs:
           git config --global user.name "apexyard-ci"
           git config --global init.defaultBranch main
 
+      # Fork-only (ops fork addition, not upstream). Some fail-before tests pin
+      # commits that exist only on upstream dev, because releases squash-merge
+      # into main. A fork synced from main never has them, so fetch upstream dev.
+      - name: Fetch upstream dev commits pinned by fail-before tests (fork only)
+        if: github.repository != 'me2resh/apexyard'
+        run: |
+          git fetch -q --no-tags "$GITHUB_SERVER_URL/me2resh/apexyard.git" \
+            refs/heads/dev:refs/remotes/upstream/dev
+          git cat-file -e "a791285d974de04359d8b0d1494878651231debc^{commit}"
+
       - name: Run the hook test suite
         run: |
           jq --version
